@@ -12,17 +12,14 @@ pipeline{
                      sh "mv target/*.war target/myweb.war"
                   }
               }
-           stages("deploy-dev"){
-           steps{
-                 sshagent(['tomcat-new']) {
-                 sh """
-                    scp -o StricktHostKeyChecking=no target/myweb.war ansiadm@192.168.0.109:/opt/apache-tomcat-8.5.70/webapps
-                    ssh ansiadm@192.168.0.109 /opt/apache-tomcat-8.5.70/bin/shutdown.sh
-                    ssh ansiadm@192.168.0.109 /opt/apache-tomcat-8.5.70/bin/startup.sh
-
-                  """
+                steps{
+                     sshagent(['tomcat-new']) {
+                        sh """
+                          scp -o StricktHostKeyChecking=no target/myweb.war ansiadm@192.168.0.109:/opt/apache-tomcat-8.5.70/webapps
+                          ssh ansiadm@192.168.0.109 /opt/apache-tomcat-8.5.70/bin/shutdown.sh
+                          ssh ansiadm@192.168.0.109 /opt/apache-tomcat-8.5.70/bin/startup.sh
+                       """
                  }      
              }
            }
-          }
-         }    
+        }
