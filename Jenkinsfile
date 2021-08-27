@@ -12,6 +12,7 @@ pipeline{
                      sh "mv target/*.war target/myweb.war"
                   }
               }
+             stage("deploy"){
                 steps{
                      sshagent(['tomcat-new']) {
                         sh """
@@ -23,3 +24,4 @@ pipeline{
              }
            }
         }
+}
