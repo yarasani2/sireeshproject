@@ -8,7 +8,7 @@ node{
                     }    
       stage("deploy-dev"){
            steps{
-                 sshagent(['tomcat-new']) {
+                sshagent(['tomcat-new']) {
                  sh """
                     scp -o StricktHostKeyChecking=no target/*.war ansiadm@192.168.0.109:/opt/apache-tomcat-8.5.70/webapps/
                     ssh ansiadm@192.168.0.109 /opt/apache-tomcat-8.5.70/bin/shutdown.sh
