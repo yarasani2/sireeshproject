@@ -8,7 +8,7 @@ pipeline{
              }
             stage('Compile-Package-create-war-file'){
                   steps{
-                       def mvnHome =  tool name: 'maven-3', type: 'maven'   
+                 
                        bat "${mvnHome}/bin/mvn package"
                     }   
                  }
