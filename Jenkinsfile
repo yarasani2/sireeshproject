@@ -1,17 +1,11 @@
-pipeline{
-      agent any
-       stages{
-           stage("Git Checkout"){
-               steps{
-                    git branch: 'main', credentialsId: 'ec2abf84-88be-4e75-9ddc-37c7b94d8b00', url: 'https://github.com/yarasani2/sireeshproject.git'
+node{
+      stage("Git Checkout") {
+                    git 'https://github.com/yarasani2/sireeshproject.git'
                 }
-             }
-            stage('Compile-Package-create-war-file'){
-                  steps{
-                 
-                       bat "${mvnHome}/bin/mvn package"
+      stage('Compile-Package-create-war-file'){
+                 def mvnHome =  tool name: 'maven-3', type: 'maven'
+                 bat "${mvnHome}/bin/mvn package"
                     }   
-                 }
              stage("deploy"){
                 steps{
                      sshagent(['tomcat-new']) {
