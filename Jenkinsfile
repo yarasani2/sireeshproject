@@ -16,12 +16,11 @@ pipeline{
          }
         stage("deploy dev"){
             steps{
-              sshagent(credentials: ['tomcat-new'], ignoreMissing: true) {
-                    sh """
-                    
-                    scp -r target/*.war ansiadm@192.168.0.104:/opt/latest/webapps/
-                    ssh ansiadm@192.168.0.104 /opt/latest/bin/shutdown.sh
-                    ssh ansiadm@192.168.0.104 /opt/latest/bin/startup.sh
+                sshagent(['']) {
+                    sh """   
+                    scp -o StrictHostKeyChecking target/*.war srinivas@192.168.0.104:/opt/latest/webapps/
+                    ssh srinivas@192.168.0.104 /opt/latest/bin/shutdown.sh
+                    ssh srinivas@192.168.0.104 /opt/latest/bin/startup.sh
 
                    """               
            }
