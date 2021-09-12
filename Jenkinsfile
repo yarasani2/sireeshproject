@@ -16,9 +16,9 @@ pipeline{
          }
         stage("deploy dev"){
             steps{
-              sshagent(['tomcat-new']) {
+              sshagent(credentials: ['tomcat-new'], ignoreMissing: true) {
                     sh """
-
+                    
                     scp -o StricktHostKeyChecking=no target/*.war ansiadm@192.168.0.104:/opt/latest/webapps/
                     ssh ansiadm@192.168.0.104 /opt/latest/bin/shutdown.sh
                     ssh ansiadm@192.168.0.104 /opt/latest/bin/startup.sh
